@@ -8,6 +8,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  FlatList,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,30 +25,32 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { useColorScheme } from 'nativewind';
+import {useColorScheme} from 'nativewind';
+import ProductList from './src/components/ProductList';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function App(): JSX.Element {
-  const {colorScheme, toggleColorScheme} = useColorScheme()
-  const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
+  const {colorScheme, toggleColorScheme} = useColorScheme();
+  const backgroundStyle =
+    'flex-1 justify-center items-center bg-gray-50 dark:bg-black';
   return (
     <SafeAreaView className={backgroundStyle}>
       <StatusBar
         barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
       />
-      <View>
+      <View className="flex-row w-full gap-5">
+        <Text className="font-semibold text-xl dark:text-white">
+          New Connection!
+        </Text>
         <Switch
           value={colorScheme === 'dark'}
           onChange={() => toggleColorScheme()}
         />
-        <Text className="text-2xl text-black dark:text-white">
-          Start RN App....
-        </Text>
       </View>
+      <ProductList />
     </SafeAreaView>
   );
 }
