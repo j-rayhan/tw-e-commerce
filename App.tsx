@@ -12,8 +12,8 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Switch,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
@@ -24,22 +24,26 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { useColorScheme } from 'nativewind';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
+  const {colorScheme, toggleColorScheme} = useColorScheme()
   const backgroundStyle = 'bg-neutral-300 dark:bg-slate-900';
   return (
     <SafeAreaView className={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <View>
+        <Switch
+          value={colorScheme === 'dark'}
+          onChange={() => toggleColorScheme()}
+        />
         <Text className="text-2xl text-black dark:text-white">
           Start RN App....
         </Text>
