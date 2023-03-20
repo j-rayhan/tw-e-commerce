@@ -1,12 +1,19 @@
 import * as React from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import { styled } from 'nativewind';
+import {styled} from 'nativewind';
+import Animated, { FadeIn, FadeInDown, Layout, RollOutRight } from 'react-native-reanimated';
 import products from '../utils/data';
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
-export const ProductCard = ({title, image, description, price, category}) => {
+export const ProductCard = ({
+  title,
+  image,
+  description,
+  price,
+  category,
+}) => {
   const [count, setCount] = React.useState(1);
   const handleCount = type => {
     if (type === 'add') {
@@ -17,7 +24,11 @@ export const ProductCard = ({title, image, description, price, category}) => {
     }
   };
   return (
-    <TouchableOpacity className="w-full bg-white dark:bg-gray-50/10 rounded-3xl p-5 my-3">
+    <Animated.View
+      layout={Layout.stiffness()}
+      entering={FadeInDown}
+      exiting={RollOutRight}
+      className="w-full bg-white dark:bg-gray-50/10 rounded-3xl p-5 my-3">
       <StyledView className="rounded-3xl">
         <Image
           source={{uri: image}}
@@ -59,18 +70,39 @@ export const ProductCard = ({title, image, description, price, category}) => {
           Add to Cart
         </Text>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </Animated.View>
   );
 };
 
 const ProductList = () => {
+  const [items, setItems] = React.useState(products);
+  const handleAdd = () => {
+    const randomIndex = Math.floor(Math.random() * 9) + 1;
+    setItems([{...products[randomIndex], id: Date.now()}, ...items]);
+  };
+  const handleDelete = () => setItems([...items.slice(1)]);
   return (
-    <FlatList
-      data={products}
-      keyExtractor={item => `${item.id}`}
-      renderItem={({item}) => <ProductCard {...item} />}
-      contentContainerStyle={{paddingHorizontal: 14}}
-    />
+    <View className="flex-1">
+      {/* Buttons */}
+      <View className="flex-row justify-between items-center mx-4 my-2">
+        <TouchableOpacity
+          className="bg-green-300 py-3 px-10 rounded-2xl"
+          onPress={() => handleAdd()}>
+          <Text className="font-semibold text-xl">Add</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-red-400 py-3 px-10 rounded-2xl"
+          onPress={() => handleDelete()}>
+          <Text className="font-semibold text-xl text-white">Delete</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={items}
+        keyExtractor={item => `${item.id}`}
+        renderItem={({item}) => <ProductCard {...item} />}
+        contentContainerStyle={{paddingHorizontal: 14}}
+      />
+    </View>
   );
 };
 
