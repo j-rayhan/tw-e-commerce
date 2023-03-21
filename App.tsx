@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Switch,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -27,15 +28,63 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {useColorScheme} from 'nativewind';
 import ProductList from './src/components/ProductList';
+import Animated, {FadeIn, FadeInUp, Layout} from 'react-native-reanimated';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+type Item = {id: string};
+const list: Item[] = new Array(5).fill('a').map((_, i) => ({id: '' + i}));
+
+function ItemList(): JSX.Element {
+  const [items, setItems] = React.useState<Item[]>(
+    new Array(2).fill(0).map((_, i) => ({id: '' + i})),
+  );
+
+  const addItem = () => {
+    setItems(prevItems => [...prevItems, {id: Date.now() + ''}]);
+  };
+  console.log('PRINT IN %s=====>', 'App START ***', items);
+  return (
+    <View className="flex-1">
+      {/* Add Button */}
+      <TouchableOpacity
+        className="w-20 bg-green-500 aspect-square rounded-full absolute bottom-5 right-5 z-10 justify-center"
+        onPress={() => addItem()}>
+        <Text className="text-center text-4xl font-extrabold text-white">
+          +
+        </Text>
+      </TouchableOpacity>
+      {/* Item list */}
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{paddingVertical: 50}}
+      >
+      {items.map(({id}) => (
+        <Animated.View
+          key={id}
+          layout={Layout}
+          className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
+          <Text className="text-center mt-7 text-2xl">{id}</Text>
+        </Animated.View>
+      ))}
+      </ScrollView>
+      {/* <FlatList
+        data={items}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <Animated.View className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
+            <Text className="text-center mt-7 text-2xl">{item.id}</Text>
+          </Animated.View>
+        )}
+      /> */}
+    </View>
+  );
+}
 function App(): JSX.Element {
   const {colorScheme, toggleColorScheme} = useColorScheme();
-  const backgroundStyle =
-    'flex-1 justify-center items-center bg-gray-50 dark:bg-black';
+  const backgroundStyle = 'flex-1 bg-gray-50 dark:bg-black';
   return (
     <SafeAreaView className={backgroundStyle}>
       <StatusBar
@@ -50,7 +99,7 @@ function App(): JSX.Element {
           onChange={() => toggleColorScheme()}
         />
       </View>
-      <ProductList />
+      <ItemList />
     </SafeAreaView>
   );
 }

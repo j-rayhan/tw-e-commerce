@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {styled} from 'nativewind';
-import Animated, { FadeIn, FadeInDown, Layout, RollOutRight } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, Layout, RollOutRight } from 'react-native-reanimated';
 import products from '../utils/data';
 
 const StyledView = styled(View);
@@ -25,9 +25,9 @@ export const ProductCard = ({
   };
   return (
     <Animated.View
-      layout={Layout.stiffness()}
-      entering={FadeInDown}
-      exiting={RollOutRight}
+      layout={Layout.delay(1000)}
+      entering={FadeIn}
+      exiting={FadeOut}
       className="w-full bg-white dark:bg-gray-50/10 rounded-3xl p-5 my-3">
       <StyledView className="rounded-3xl">
         <Image
