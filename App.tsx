@@ -28,7 +28,12 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {useColorScheme} from 'nativewind';
 import ProductList from './src/components/ProductList';
-import Animated, {FadeIn, FadeInUp, FadeOut, Layout} from 'react-native-reanimated';
+import Animated, {
+  FadeIn,
+  FadeInUp,
+  FadeOut,
+  Layout,
+} from 'react-native-reanimated';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,28 +67,34 @@ function ItemList(): JSX.Element {
       {/* Item list */}
       <ScrollView
         style={{flex: 1}}
-        contentContainerStyle={{paddingVertical: 50}}
-      >
-      {items.map(({id}) => (
-        <Animated.View
-          key={id}
-          entering={FadeIn}
-          exiting={FadeOut}
-          layout={Layout}
-          onTouchEnd={() => deleteItem(id)}
-          className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
-          <Text className="text-center mt-7 text-2xl">{id}</Text>
-        </Animated.View>
-      ))}
+        contentContainerStyle={{paddingVertical: 50}}>
+        {items.map(({id}) => (
+          <Animated.View
+            key={id}
+            entering={FadeIn}
+            exiting={FadeOut}
+            layout={Layout}
+            onTouchEnd={() => deleteItem(id)}
+            className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
+            <Text className="text-center mt-7 text-2xl">{id}</Text>
+          </Animated.View>
+        ))}
       </ScrollView>
       {/* <FlatList
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <Animated.View className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
+          <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          layout={Layout}
+          onTouchEnd={() => deleteItem(item.id)}
+          className="w-11/12 h-24 self-center rounded-2xl my-2 bg-blue-400">
             <Text className="text-center mt-7 text-2xl">{item.id}</Text>
           </Animated.View>
         )}
+        style={{flex: 1}}
+        contentContainerStyle={{paddingVertical: 50}}
       /> */}
     </View>
   );
@@ -110,4 +121,4 @@ function App(): JSX.Element {
   );
 }
 
-export default ItemList;
+export default App;
