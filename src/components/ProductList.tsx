@@ -1,19 +1,25 @@
 import * as React from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {styled} from 'nativewind';
-import Animated, { FadeIn, FadeOut, Layout, RollOutRight } from 'react-native-reanimated';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  Layout,
+  RollOutRight,
+} from 'react-native-reanimated';
 import products from '../utils/data';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-export const ProductCard = ({
-  title,
-  image,
-  description,
-  price,
-  category,
-}) => {
+export const ProductCard = ({title, image, description, price, category}) => {
   const [count, setCount] = React.useState(1);
   const handleCount = type => {
     if (type === 'add') {
@@ -25,9 +31,9 @@ export const ProductCard = ({
   };
   return (
     <Animated.View
-      layout={Layout.delay(1000)}
+      layout={Layout}
       entering={FadeIn}
-      exiting={FadeOut}
+      exiting={RollOutRight}
       className="w-full bg-white dark:bg-gray-50/10 rounded-3xl p-5 my-3">
       <StyledView className="rounded-3xl">
         <Image
@@ -96,12 +102,11 @@ const ProductList = () => {
           <Text className="font-semibold text-xl text-white">Delete</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={items}
-        keyExtractor={item => `${item.id}`}
-        renderItem={({item}) => <ProductCard {...item} />}
-        contentContainerStyle={{paddingHorizontal: 14}}
-      />
+      <ScrollView contentContainerStyle={{paddingHorizontal: 14}}>
+        {items.map(item => (
+          <ProductCard key={item.id} {...item} />
+        ))}
+      </ScrollView>
     </View>
   );
 };

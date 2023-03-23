@@ -116,7 +116,7 @@ function App(): JSX.Element {
           onChange={() => toggleColorScheme()}
         />
       </View>
-      <ItemList />
+      <ProductList />
     </SafeAreaView>
   );
 }
