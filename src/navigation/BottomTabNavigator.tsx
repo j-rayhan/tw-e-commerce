@@ -3,7 +3,7 @@ import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SCREEN} from '../constants/constant';
-import {Home, Notification, Setting, Wallet} from '../screens/bottom_tab';
+import {Home, Notification, Wallet} from '../screens/bottom_tab';
 import SettingNavigator from './SettingNavigator';
 
 export type BottomStackParamList = {
