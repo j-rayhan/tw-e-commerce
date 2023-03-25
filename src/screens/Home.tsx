@@ -1,20 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import * as React from 'react';
 import {Text, SafeAreaView, View, Pressable} from 'react-native';
-import Animated, {
-  FadeIn,
-  FadeOutDown,
-  Layout,
-} from 'react-native-reanimated';
+import Animated, {FadeIn, FadeOutDown, Layout} from 'react-native-reanimated';
 import {HeroImage} from '../assets';
 
 const Home = () => {
   const navigation = useNavigation();
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, [navigation]);
   return (
     <SafeAreaView className="flex-1 bg-white relative">
       {/* Header Section */}
