@@ -4,17 +4,18 @@ import * as React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SCREEN} from '../constants/constant';
 import {Home, Notification, Setting, Wallet} from '../screens/bottom_tab';
+import SettingNavigator from './SettingNavigator';
 
 export type BottomStackParamList = {
   [SCREEN.HOME]: undefined;
   [SCREEN.WALLET]: undefined;
   [SCREEN.NOTIFICATION]: undefined;
-  [SCREEN.SETTING]: undefined;
+  [SCREEN.SETTING_NAVIGATOR]: undefined;
 };
 
 function CustomTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   return (
-    <View className="flex-row items-center p-2 py-4">
+    <View className="flex-row items-center p-2 py-6">
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -47,15 +48,18 @@ function CustomTabBar({state, descriptors, navigation}: BottomTabBarProps) {
 
         return (
           <TouchableOpacity
-            className="p-2"
+            className="flex-1"
             accessibilityRole="button"
             accessibilityState={isFocused ? {selected: true} : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
-            style={{flex: 1}}>
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+            onLongPress={onLongPress}>
+            <Text
+              className="text-center text-xl"
+              style={{color: isFocused ? '#673ab7' : '#222'}}>
+              {label}
+            </Text>
           </TouchableOpacity>
         );
       })}
@@ -72,7 +76,13 @@ function BottomTabNavigator() {
       <Tab.Screen name={SCREEN.HOME} component={Home} />
       <Tab.Screen name={SCREEN.WALLET} component={Wallet} />
       <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
-      <Tab.Screen name={SCREEN.SETTING} component={Setting} />
+      <Tab.Screen
+        name={SCREEN.SETTING_NAVIGATOR}
+        component={SettingNavigator}
+        options={{
+          tabBarLabel: 'Setting',
+        }}
+      />
     </Tab.Navigator>
   );
 }
