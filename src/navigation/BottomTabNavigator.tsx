@@ -5,6 +5,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {SCREEN} from '../constants/constant';
 import {Home, Notification, Wallet} from '../screens/bottom_tab';
 import SettingNavigator from './SettingNavigator';
+import FontTest from '../screens/FontTest';
 
 export type BottomStackParamList = {
   [SCREEN.HOME]: undefined;
@@ -15,7 +16,7 @@ export type BottomStackParamList = {
 
 function CustomTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   return (
-    <View className="flex-row items-center p-2 py-6">
+    <View className="w-screen flex-row items-center py-6">
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -48,7 +49,8 @@ function CustomTabBar({state, descriptors, navigation}: BottomTabBarProps) {
 
         return (
           <TouchableOpacity
-            className="flex-1"
+            key={route.key}
+            className="flex-auto"
             accessibilityRole="button"
             accessibilityState={isFocused ? {selected: true} : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -73,7 +75,7 @@ function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{headerShown: false}}
       tabBar={props => <CustomTabBar {...props} />}>
-      <Tab.Screen name={SCREEN.HOME} component={Home} />
+      <Tab.Screen name={SCREEN.HOME} component={FontTest} />
       <Tab.Screen name={SCREEN.WALLET} component={Wallet} />
       <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
       <Tab.Screen
